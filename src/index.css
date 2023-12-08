@@ -1,0 +1,24 @@
+.tic__board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.tic__cell {
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.tic__container {
+  position: relative;
+  max-width: fit-content;
+}
+
+.tic__pop-up {
+  position: absolute;
+  display: none;
+  top: 50%;
+  right: 50%;
+}
