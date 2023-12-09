@@ -40,34 +40,54 @@ export default function Tic() {
 
     for (let row = 0; row < board.length; row++) {
       if (board[row].every((cell) => cell === turn)) {
-        console.log("winner ", turn);
+        setWinner(turn);
+        return;
       }
+    }
 
-      for (let cell = 0; cell < board.length; cell++) {
-        console.log(`row: ${row}, cell: ${cell}, val: ${board[row][cell]}`);
-        console.log("------");
-        // break;
+    for (let col = 0; col < board.length; col++) {
+      let columnWin = true;
+      for (let row = 0; row < board.length; row++) {
+        if (board[row][col] !== turn) {
+          columnWin = false;
+          break;
+        }
       }
+      if (columnWin) {
+        setWinner(turn);
+        return;
+      }
+    }
+
+    let leftDiagonalWin = true;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][i] !== turn) {
+        leftDiagonalWin = false;
+        break;
+      }
+    }
+    if (leftDiagonalWin) {
+      setWinner(turn);
+      return;
+    }
+
+    let rightDiagonalWin = true;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][board.length - 1 - i] !== turn) {
+        rightDiagonalWin = false;
+        break;
+      }
+    }
+    if (rightDiagonalWin) {
+      setWinner(turn);
+      return;
     }
   }
 
   function makeMove(clickedRow: number, clickedCol: number) {
     setBoardData((oldBoard) => {
-      const updatedBoard = oldBoard?.map(function (row, rowIndex) {
-        if (rowIndex === clickedRow) {
-          return [
-            ...row.map(function (col, colIndex) {
-              if (colIndex == clickedCol) {
-                return turn;
-              } else {
-                return col;
-              }
-            }),
-          ];
-        } else {
-          return [...row];
-        }
-      });
+      const updatedBoard = [...oldBoard];
+      updatedBoard[clickedRow][clickedCol] = turn;
       checkWinner(updatedBoard);
       return updatedBoard;
     });
