@@ -1,28 +1,23 @@
-import { ReactElement, useMemo, useState } from "react";
-import QuestionMultiple from "./QuestionMultiple";
-import QuestionBoolean from "./QuestionBoolean";
+import { useMemo, useState } from "react";
 import { toShuffled } from "./utils";
 
 export default function QuestionWrapper({
   handleQuestionSwitch,
   questionData,
-  type,
   index,
+  setAllUserAnswers,
+  allUserAnswers,
+  finishedQuiz,
 }: {
   handleQuestionSwitch: Function;
   questionData: QuestionT;
-  type: string;
   index: number;
+  setAllUserAnswers: React.Dispatch<
+    React.SetStateAction<stringKeyStringValueT | null>
+  >;
+  allUserAnswers: stringKeyStringValueT | null;
+  finishedQuiz: boolean;
 }) {
-  function questionTypeManager(type: string, q: QuestionT) {
-    if (type == "multiple") {
-      return <QuestionMultiple questionData={q} />;
-    } else if (type == "boolean") {
-      return <QuestionBoolean questionData={q} />;
-    }
-  }
-
-  const [answer, setAnswer] = useState<null | string>(null);
   const answers = useMemo(
     () =>
       toShuffled([
@@ -31,29 +26,92 @@ export default function QuestionWrapper({
       ]),
     [questionData.question]
   );
+  const [userAnswer, setUserAnswer] = useState<null | string>(null);
+  const [correctAnswer, setCorrectAnswer] = useState<true | false>(false);
 
   function selectAnswer(answer: string) {
-    // setAnswer();
+    setUserAnswer(answer);
+    setAllUserAnswers((prev) => {
+      return { ...prev, [questionData.question]: answer };
+    });
+  }
+
+  function styleManager(answer: string) {
+    // setCorrectAnswer(false);
+    if (
+      userAnswer == answer ||
+      (allUserAnswers != null &&
+        !finishedQuiz &&
+        allUserAnswers[questionData.question] == answer)
+    ) {
+      return {
+        padding: "10px",
+        margin: "5px",
+        backgroundColor: "cornflowerblue",
+      };
+    } else if (
+      finishedQuiz &&
+      allUserAnswers &&
+      questionData.correct_answer == allUserAnswers[questionData.question] &&
+      questionData.correct_answer == answer
+    ) {
+      return {
+        padding: "10px",
+        margin: "5px",
+        backgroundColor: "green",
+      };
+    } else if (
+      finishedQuiz &&
+      allUserAnswers &&
+      questionData.correct_answer != allUserAnswers[questionData.question] &&
+      questionData.correct_answer == answer
+    ) {
+      // setCorrectAnswer(true);
+      return {
+        padding: "10px",
+        margin: "5px",
+        backgroundColor: "green",
+      };
+    } else if (
+      finishedQuiz &&
+      allUserAnswers &&
+      questionData.correct_answer != allUserAnswers[questionData.question] &&
+      allUserAnswers[questionData.question] == answer
+    ) {
+      return {
+        padding: "10px",
+        margin: "5px",
+        backgroundColor: "red",
+      };
+    } else {
+      return { padding: "10px", margin: "5px" };
+    }
   }
 
   const shuffledAnswersUI = answers.map((answer) => {
     return (
-      <div
-        style={{ padding: "10px" }}
+      <button
+        disabled={finishedQuiz}
+        style={styleManager(answer)}
         key={answer}
         onClick={() => selectAnswer(answer)}
       >
         {answer}
-      </div>
+      </button>
     );
   });
+
   return (
     <div>
       <span>Question number {index + 1}</span>
-      {/* {questionTypeManager(type, questionData)} */}
+      {finishedQuiz &&
+      allUserAnswers &&
+      questionData.correct_answer == allUserAnswers[questionData.question]
+        ? "Answer is correct !"
+        : "Answer is wrong "}
       <div style={{ border: "1px solid blue", padding: "15px" }}>
-        <span>{questionData.category}</span>
-        <span>{questionData.difficulty}</span>
+        <div>Category: {questionData.category}</div>
+        <div>Difficulty: {questionData.difficulty}</div>
         <h2>{questionData.question}</h2>
         {shuffledAnswersUI}
       </div>

@@ -11,3 +11,7 @@ type QuestionsDataT = {
   response_code: number;
   results: QuestionT[];
 };
+
+type stringKeyStringValueT = {
+  [key: string]: string;
+};
