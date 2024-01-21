@@ -39,10 +39,12 @@ export default function QuestionWrapper({
   function styleManager(answer: string) {
     // setCorrectAnswer(false);
     if (
-      userAnswer == answer ||
-      (allUserAnswers != null &&
-        !finishedQuiz &&
-        allUserAnswers[questionData.question] == answer)
+      !finishedQuiz &&
+      userAnswer == answer
+      // ||
+      // (allUserAnswers != null &&
+      //   !finishedQuiz &&
+      //   allUserAnswers[questionData.question] == answer)
     ) {
       return {
         padding: "10px",
