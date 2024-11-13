@@ -58,6 +58,7 @@ export default function Board({
   }
 
   function handleClick(rowIndex: number, colIndex: number) {
+    console.log("rowIndex, colIndex: ", rowIndex, colIndex);
     checkWinner(rowIndex, colIndex);
     setRows((prevRows) => {
       const newRows = prevRows.slice();
@@ -65,6 +66,7 @@ export default function Board({
         if (newRows[i][colIndex] == null) {
           newRows[i] = newRows[i].slice();
           newRows[i][colIndex] = turn;
+          console.log("newRows[i][colIndex]: ", i, colIndex);
           setTurn((currPlayer) => {
             if (currPlayer == ECell.PLAYER_1) {
               return ECell.PLAYER_2;
