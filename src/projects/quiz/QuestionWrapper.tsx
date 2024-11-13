@@ -32,6 +32,7 @@ export default function QuestionWrapper({
   function selectAnswer(answer: string) {
     setUserAnswer(answer);
     setAllUserAnswers((prev) => {
+      // console.log("prev answers ", prev);
       return { ...prev, [questionData.question]: answer };
     });
   }

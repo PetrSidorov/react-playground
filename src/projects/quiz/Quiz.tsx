@@ -6,13 +6,13 @@ export default function Quiz() {
   const [questions, setQuestions] = useState<null | QuestionsDataT>();
   const [activeQuestion, setActiveQuestion] = useState<number>(0);
   const [allUserAnswers, setAllUserAnswers] =
-    useState<stringKeyStringValueT | null>(null);
+    useState<stringKeyStringValueT | null>({});
   const [finishedQuiz, setFinishedQuiz] = useState<true | false>(false);
   const [init, setInit] = useState<true | false>(false);
 
-  useEffect(() => {
-    console.log(allUserAnswers);
-  }, [allUserAnswers]);
+  // useEffect(() => {
+  //   console.log(allUserAnswers);
+  // }, [allUserAnswers]);
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=3")

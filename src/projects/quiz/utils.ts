@@ -17,8 +17,8 @@ export function decodeObjectValues(obj: stringKeyStringValueT) {
       decodedObj[key] = decodeEntities(obj[key]);
     }
   }
-  console.log("decodedObj is ", decodedObj);
-  console.log("obj is ", obj);
+  // console.log("decodedObj is ", decodedObj);
+  // console.log("obj is ", obj);
   return decodedObj;
 }
 
