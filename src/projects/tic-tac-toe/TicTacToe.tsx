@@ -21,7 +21,7 @@ export default function Tic() {
   useEffect(() => {
     // console.log("state w", winner);
     if (winner) {
-      console.log("the winner indeed is ");
+      console.log(`the winner indeed is ${winner}`);
     }
   }, [winner]);
 

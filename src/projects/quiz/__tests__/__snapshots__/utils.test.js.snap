@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot 1`] = `
+{
+  "key1": "Where is the "Sonoran Desert" located?",
+  "key2": "Another "example" with quotes.",
+}
+`;
