@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import QuestionWrapper from "./QuestionWrapper";
 import { decodeEntities } from "./utils";
+import { useSelector } from "react-redux";
 
 export default function Quiz() {
   const [questions, setQuestions] = useState<null | QuestionsDataT>();
   const [activeQuestion, setActiveQuestion] = useState<number>(0);
-  const [allUserAnswers, setAllUserAnswers] =
-    useState<stringKeyStringValueT | null>({});
+  const [_, setAllUserAnswers] = useState<stringKeyStringValueT | null>({});
+  const allUserAnswers = useSelector((state) => state);
+
   const [finishedQuiz, setFinishedQuiz] = useState<true | false>(false);
   const [init, setInit] = useState<true | false>(false);
 

@@ -8,7 +8,7 @@ export interface AnswerAction {
 }
 
 export const ANSWER = "ANSWER" as const;
-export const answer = (question: string, answer: string) => ({
+export const answerQuestion = (question: string, answer: string) => ({
   type: ANSWER,
   payload: { question, answer },
 });

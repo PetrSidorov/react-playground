@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { toShuffled } from "./utils";
+import { useDispatch } from "react-redux";
+import { answerQuestion } from "./redux/actions";
 
 export default function QuestionWrapper({
   handleQuestionSwitch,
@@ -18,6 +20,7 @@ export default function QuestionWrapper({
   allUserAnswers: stringKeyStringValueT | null;
   finishedQuiz: boolean;
 }) {
+  const dispatch = useDispatch();
   const answers = useMemo(
     () =>
       toShuffled([
@@ -31,10 +34,11 @@ export default function QuestionWrapper({
 
   function selectAnswer(answer: string) {
     setUserAnswer(answer);
-    setAllUserAnswers((prev) => {
-      // console.log("prev answers ", prev);
-      return { ...prev, [questionData.question]: answer };
-    });
+    // setAllUserAnswers((prev) => {
+    //   // console.log("prev answers ", prev);
+    //   return { ...prev, [questionData.question]: answer };
+    // });
+    dispatch(answerQuestion(questionData.question, answer));
   }
 
   function styleManager(answer: string) {
